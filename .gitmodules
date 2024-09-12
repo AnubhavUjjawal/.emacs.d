@@ -1,0 +1,3 @@
+[submodule "tree-sitter-module"]
+	path = tree-sitter-module
+	url = https://github.com/casouri/tree-sitter-module.git

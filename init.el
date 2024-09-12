@@ -17,11 +17,17 @@
   (indent-region (point-min) (point-max) nil)
   (untabify (point-min) (point-max)))
 
+; (setq x-select-enable-clipboard t)
 (setq display-line-numbers-type 'relative)
 (global-display-line-numbers-mode 1)
 (load-theme 'modus-vivendi)
                                         ; remove toolbar when opening emacs in GUI
 (tool-bar-mode -1)
+
+					; Note: the below will only work if we have built the language definitions
+					; NOTE: builtin treesitter documentation: https://git.savannah.gnu.org/cgit/emacs.git/tree/admin/notes/tree-sitter/starter-guide?h=feature/tree-sitter
+(setq treesit-extra-load-path '("~/.emacs.d/tree-sitter-module/dist"))
+
 
 (require 'package)
 (add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/packages/") t)
@@ -61,18 +67,6 @@
   :ensure t
   :defer t)
 
-(use-package tree-sitter
-  :ensure t
-  :defer t
-  :config
-  (global-tree-sitter-mode)
-  (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode))
-
-(use-package tree-sitter-langs
-  :ensure t
-  :after (tree-sitter)
-  :defer t)
-
 (use-package lua-mode
   :ensure t
   :defer t
@@ -84,6 +78,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(company-show-quick-access t nil nil "Customized with use-package company")
  '(package-selected-packages '(tree-sitter-langs tree-sitter lua-mode use-package)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
