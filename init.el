@@ -1,5 +1,6 @@
                                         ; Anubhav's Emac Configuration
                                         ; 7th September 2024
+					; NOTE: Before running emacs, make sure to build tree-sitter-module by running the `./batch.sh` command
 
 (defun efs/display-startup-time ()
   (message "Emacs loaded in %s with %d garbage collections."
