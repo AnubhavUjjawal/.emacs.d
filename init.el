@@ -1,6 +1,6 @@
                                         ; Anubhav's Emac Configuration
                                         ; 7th September 2024
-					; NOTE: Before running emacs, make sure to build tree-sitter-module by running the `./batch.sh` command
+                                        ; NOTE: Before running emacs, make sure to build tree-sitter-module by running the `./batch.sh` command
 
 (defun efs/display-startup-time ()
   (message "Emacs loaded in %s with %d garbage collections."
@@ -18,17 +18,22 @@
   (indent-region (point-min) (point-max) nil)
   (untabify (point-min) (point-max)))
 
-; (setq x-select-enable-clipboard t)
+                                        ; (setq x-select-enable-clipboard t)
 (setq display-line-numbers-type 'relative)
 (global-display-line-numbers-mode 1)
 (load-theme 'modus-vivendi)
                                         ; remove toolbar when opening emacs in GUI
 (tool-bar-mode -1)
-
-					; Note: the below will only work if we have built the language definitions
-					; NOTE: builtin treesitter documentation: https://git.savannah.gnu.org/cgit/emacs.git/tree/admin/notes/tree-sitter/starter-guide?h=feature/tree-sitter
+                                        ; Note: the below will only work if we have built the language definitions
+                                        ; NOTE: builtin treesitter documentation: https://git.savannah.gnu.org/cgit/emacs.git/tree/admin/notes/tree-sitter/starter-guide?h=feature/tree-sitter
 (setq treesit-extra-load-path '("~/.emacs.d/tree-sitter-module/dist"))
 
+                                        ; set `eglot-events-buffer-size` to 0 to enhance performance
+(setq eglot-events-buffer-size 0)
+
+					; NOTE: We want to run the below line if we get errors like failed to verify signature https://stackoverflow.com/a/66034270
+					; We have commented it out because it takes a lot of time to start emacs when this is on.
+; (package-refresh-contents)
 
 (require 'package)
 (add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/packages/") t)
@@ -64,6 +69,9 @@
   (setq company-text-icons-add-background t)
   (global-company-mode 1))
 
+;; (use-package eldoc-box
+;;   :ensure t)
+
 (use-package magit
   :ensure t
   :defer t)
@@ -74,13 +82,29 @@
   :mode
   ("\\.lua$" . lua-mode))
 
+(use-package haskell-mode
+  :ensure t
+  :defer t
+  :mode
+  ("\\.hs$" . haskell-mode))
+
+(use-package reformatter
+  :ensure t)
+
+(use-package zig-mode
+  :ensure t
+  :defer t
+  :mode
+  ("\\.zig$" . zig-mode))
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(company-show-quick-access t nil nil "Customized with use-package company")
- '(package-selected-packages '(tree-sitter-langs tree-sitter lua-mode use-package)))
+ '(package-selected-packages
+   '(eldoc-box haskell-mode tree-sitter-langs tree-sitter lua-mode use-package)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
